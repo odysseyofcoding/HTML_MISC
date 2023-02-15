@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="about:blank" type="image/x-icon" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      #response-container {
+        overflow-wrap: nowrap;
+        white-space: pre;
+        overflow-x: scroll;
+        max-width: 100%;
+      }
+      .non-empty-value {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+
+    <div id="response-container" style="max-width: 400px"></div>
+    <script>
+      const response = {
+        Name: {
+          First: "Jon",
+          Middle: "",
+          Last: "Doe",
+        },
+        Address: {
+          Locality: "Address",
+          PostalCode: "Wypiti",
+          Country: "",
+          HouseNumber: "",
+          Latitude: "52.922140",
+          Longitude: "17.001120",
+        },
+        Email: {
+          EmailAddress: "jondoe@gmail.com",
+        },
+      };
+
+      const jsonString = JSON.stringify(response, null, 2);
+
+      const jsonObject = JSON.parse(jsonString);
+
+      function modifyObjectValues(object) {
+        for (const key in object) {
+          if (typeof object[key] === "object") {
+            modifyObjectValues(object[key]);
+          } else if (
+            typeof object[key] === "string" &&
+            object[key].trim() !== ""
+          ) {
+            object[key] = `<span class='non-empty-value'>${object[key]}</span>`;
+          }
+        }
+      }
+      modifyObjectValues(jsonObject);
+
+      const modifiedJsonString = JSON.stringify(jsonObject, null, 2);
+
+      const responseContainer = document.getElementById("response-container");
+
+      responseContainer.innerHTML = modifiedJsonString;
+    </script>
+  </body>
+</html>
