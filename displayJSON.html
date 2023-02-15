@@ -42,10 +42,6 @@
         },
       };
 
-      const jsonString = JSON.stringify(response, null, 2);
-
-      const jsonObject = JSON.parse(jsonString);
-
       function modifyObjectValues(object) {
         for (const key in object) {
           if (typeof object[key] === "object") {
@@ -58,9 +54,9 @@
           }
         }
       }
-      modifyObjectValues(jsonObject);
+      modifyObjectValues(response);
 
-      const modifiedJsonString = JSON.stringify(jsonObject, null, 2);
+      const modifiedJsonString = JSON.stringify(response, null, 2);
 
       const responseContainer = document.getElementById("response-container");
 
